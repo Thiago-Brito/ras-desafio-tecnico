@@ -23,15 +23,15 @@ public class ClienteService {
         
         if(clienteDTO.getNome() == null || clienteDTO.getNome().isEmpty()) {
             logger.warn("Nome vazio ao tentar cadastrar cliente");
-            throw new IllegalArgumentException("O nome do cliente não pode ser vazio");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "O nome do cliente não pode ser vazio");
         }
         if(clienteDTO.getCpf() == null || clienteDTO.getCpf().isEmpty()) {
             logger.warn("CPF vazio ao tentar cadastrar cliente");
-            throw new IllegalArgumentException("O CPF do cliente não pode ser vazio");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "O CPF do cliente não pode ser vazio");
         }
         if (clienteRepository.existsByCpf(clienteDTO.getCpf())) {
             logger.warn("CPF já cadastrado: {}", clienteDTO.getCpf());
-            throw new IllegalArgumentException("Já existe um cliente cadastrado com este CPF");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Já existe um cliente cadastrado com este CPF");
         }
 
 

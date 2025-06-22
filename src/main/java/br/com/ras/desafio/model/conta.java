@@ -11,7 +11,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.DecimalMin;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity(name = "conta")
-public class conta {
+public class Conta {
     
 
     @Id
@@ -39,7 +39,7 @@ public class conta {
     @Column(nullable = false)
     private SituacaoConta situacao;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "idCliente", nullable = false)
     private Cliente cliente;
 
