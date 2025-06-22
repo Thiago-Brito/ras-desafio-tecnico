@@ -37,7 +37,7 @@ public class ContaService {
 
         if (dto.getSituacao() == SituacaoConta.CANCELADA) {
             logger.warn("Tentativa de criar conta já cancelada");
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Não é possível criar conta já cancelada");
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, "Não é possível criar conta já cancelada");
         }
         if (dto.getReferencia() == null || dto.getReferencia().isEmpty()) {
             logger.warn("Tentativa de criar conta sem referência definida");
@@ -64,6 +64,12 @@ public class ContaService {
 
     public List<ContaDTO> listarContasDoCliente(Long idCliente) {
         logger.info("Listando contas do cliente ID={}", idCliente);
+    
+        if (!clienteRepository.existsById(idCliente)) {
+            logger.warn("Cliente com ID={} não encontrado", idCliente);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente não encontrado");
+        }
+
         List<Conta> contas = contaRepository.findByClienteId(idCliente);
         return ContaMapper.toDTOList(contas);
     }

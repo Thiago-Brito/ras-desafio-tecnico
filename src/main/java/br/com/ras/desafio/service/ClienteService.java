@@ -31,7 +31,7 @@ public class ClienteService {
         }
         if (clienteRepository.existsByCpf(clienteDTO.getCpf())) {
             logger.warn("CPF já cadastrado: {}", clienteDTO.getCpf());
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Já existe um cliente cadastrado com este CPF");
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Já existe um cliente cadastrado com este CPF");
         }
 
 
@@ -58,7 +58,7 @@ public class ClienteService {
         clienteRepository.deleteById(id);
     }
 
-    public Cliente atualizarCliente(Long id, ClienteDTO clienteDTO) {
+    public ClienteDTO atualizarCliente(Long id, ClienteDTO clienteDTO) {
         Cliente cliente = clienteRepository.findById(id)
             .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cliente com ID " + id + " não encontrado"));
 
@@ -72,7 +72,7 @@ public class ClienteService {
             if (!cliente.getCpf().equals(clienteDTO.getCpf()) &&
                 clienteRepository.existsByCpf(clienteDTO.getCpf())) {
                 logger.warn("Tentativa de atualizar CPF para um já existente: {}", clienteDTO.getCpf());
-                throw new IllegalArgumentException("Já existe um cliente cadastrado com este CPF");
+                throw new ResponseStatusException(HttpStatus.CONFLICT, "Já existe um cliente cadastrado com este CPF");
             }
             cliente.setCpf(clienteDTO.getCpf());
         }
@@ -86,7 +86,9 @@ public class ClienteService {
         }
 
         logger.info("Cliente ID={} atualizado com sucesso", id);
-        return clienteRepository.save(cliente);
+        Cliente salvo = clienteRepository.save(cliente);
+        
+        return ClienteMapper.toDTO(salvo);
     }
 
 
