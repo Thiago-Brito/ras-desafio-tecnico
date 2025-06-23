@@ -86,7 +86,9 @@ Desenvolver uma API REST para gerenciamento de **Clientes** e suas **Contas**, c
 ## 🚀 Como executar
 1. Clone este repositório:
 
-```git clone https://github.com/Thiago-Brito/ras-desafio-tecnico.git
+```bash
+git clone https://github.com/Thiago-Brito/ras-desafio-tecnico.git
+cd ras-desafio-tecnico
 ```
 
 2. Configure o banco de dados PostgreSQL com as credenciais abaixo ou altere no application.propertiesL:
