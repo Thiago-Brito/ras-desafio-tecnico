@@ -127,3 +127,6 @@ O projeto está estruturado em camadas:
 * `dto` → objetos de transferência
 * `model` → entidades JPA
 * `repository` → acesso a dados
+* `mapper` → conversão entre entidades e DTOs
+* `enums` → enums utilizados nas regras do sistema
+* `exception` → tratamento de exceções personalizadas
